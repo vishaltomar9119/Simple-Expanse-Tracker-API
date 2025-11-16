@@ -9,7 +9,11 @@ router.get('/check',async(req , res)=>{
     try{
         const {User} = require('../models/model');
         const data = await User.find({is_deleted:false})
-        res.status(200).json(data);
+        let val =0;
+        for(var i=0 ;i<=20;i++){
+            val = val+(i*i)
+        }
+        res.status(200).json({data:data, value:val, message:`message from server : ${process.env.CONTAINER_ID}`});
 
     }catch(err){
        console.log(err);
