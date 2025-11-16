@@ -21,6 +21,9 @@ const register = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        if(!name|| !email ||!password){
+         return res.send({status:false , message:"name , email , password are required fileds"})
+        }
         const existingUser = await User.findOne({ email, is_deleted: false });
         if (existingUser) {
             return res.status(409).json({ status: false, error: 'User already exists' });
