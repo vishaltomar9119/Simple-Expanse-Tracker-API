@@ -2,30 +2,16 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Checkout') {
+        
+        stage('Build') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/vishaltomar9119/Simple-Expanse-Tracker-API.git'
+                echo 'Building project...'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Test') {
             steps {
-                sh 'docker build -t expense-app .'
-            }
-        }
-
-        stage('Stop Old Container') {
-            steps {
-                sh 'docker stop expense-app || true'
-                sh 'docker rm expense-app || true'
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh 'docker run -d -p 3000:3000 --name expense-app expense-app'
+                echo 'Running tests...'
             }
         }
     }
