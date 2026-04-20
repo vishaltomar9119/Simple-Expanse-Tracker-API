@@ -2,23 +2,19 @@ pipeline {
     agent any
 
     stages {
-        
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building project...'
+                sh 'docker build -t expense-app .'
             }
         }
 
-        stage('Test') {
+        stage('Run Container') {
             steps {
-                echo 'Running tests...'
-            }
-        }
-
-        stage('Run App') {
-            steps {
-                sh 'npm install'
-                sh 'nohup npm start &'
+                sh '''
+                docker stop expense-app || true
+                docker rm expense-app || true
+                docker run -d -p 3000:3000 --name expense-app expense-app
+                '''
             }
         }
     }
