@@ -14,5 +14,12 @@ pipeline {
                 echo 'Running tests...'
             }
         }
+
+        stage('Run App') {
+            steps {
+                sh 'npm install'
+                sh 'nohup npm start &'
+            }
+        }
     }
 }
